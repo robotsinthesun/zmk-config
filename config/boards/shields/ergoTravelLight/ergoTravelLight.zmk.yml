@@ -1,6 +1,6 @@
 file_format: "1"
 id: ergoTravelLight
-name: Ergo Travel Light
+name: Ergo Travel Lite
 type: shield
 url: https://github.com/jpconstantineau/ErgoTravel
 requires: [pro_micro]

@@ -1,7 +1,7 @@
 if SHIELD_ERGO_TRAVEL_LIGHT_LEFT
 
 config ZMK_KEYBOARD_NAME
-    default "Ergo Travel Light"
+    default "Ergo Travel Lite"
 
 config ZMK_SPLIT_BLE_ROLE_CENTRAL
     default y
