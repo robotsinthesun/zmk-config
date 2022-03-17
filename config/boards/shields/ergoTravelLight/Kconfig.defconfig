@@ -1,0 +1,16 @@
+if SHIELD_ERGO_TRAVEL_LIGHT_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "Ergo Travel Light"
+
+config ZMK_SPLIT_BLE_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_ERGO_TRAVEL_LIGHT_LEFT || SHIELD_ERGO_TRAVEL_LIGHT_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+endif
