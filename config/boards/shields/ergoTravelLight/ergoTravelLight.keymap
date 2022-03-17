@@ -19,10 +19,10 @@
 // |  SHIFT  |    Z    |    X    |    C    |    V    |    B    | CTRL+A  | CTRL+C  |  |  CTRL+V |  CTRL+X |    N    |    M    |    ,    |    .    |    /    |  RETURN |
 // |    FN   | CONTROL | OPTION  | COMMAND |                    |   GUI   |   DEL   | RETURN  |  SPACE  | ESCAPE  |  |  RETURN |  SPACE  |   TAB   |   BSPC  |  R ALT  |
             bindings = <
-    &kp ESC     &kp Q      &kp W      &kp E     &kp R       &kp T      &kp 1           &kp 3     &kp Y      &kp U      &kp I     &kp O      &kp P     &kp LBRC
-    &kp TAB     &kp A      &kp S      &kp D     &kp F       &kp G      &kp 2           &kp 4     &kp H      &kp J      &kp K     &kp L      &kp SEMI  &kp SQT
+    &kp ESC     &kp Q      &kp W      &kp E     &kp R       &kp T      &kp N1           &kp N3     &kp Y      &kp U      &kp I     &kp O      &kp P     &kp LBKT
+    &kp TAB     &kp A      &kp S      &kp D     &kp F       &kp G      &kp N2           &kp N4     &kp H      &kp J      &kp K     &kp L      &kp SEMI  &kp SQT
     &kp LSHIFT  &kp Z      &kp X      &kp C     &kp V       &kp B      &kp SPACE           &kp SPACE     &kp LC(X)  &kp N      &kp M     &kp COMMA  &kp DOT   &kp FSLH &kp RCTRL
-    &mo FIRST   &kp LCTRL  &kp LGUI   &kp LALT  &mo SECOND  &kp SPACE                                    &kp SPACE  &mo THIRD  &kp LALT  &kp LGUI   &kp LGUI  &mo FOURTH
+    &none   &kp LCTRL  &kp LALT   &kp LGUI  &none  &kp SPACE                                    &kp SPACE  &none  &kp RGUI  &kp RALT   &kp RCTRL  &none
             >;
 
             // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
