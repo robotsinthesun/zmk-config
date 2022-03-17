@@ -1,0 +1,48 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include "keymap_german.h"
+
+// Layer aliases.
+#define DEFAULT 0
+#define FIRST 1
+#define SECOND 2
+#define THIRD 3
+#define FOURTH 4
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// |   ESC   |    Q    |    W    |    E    |    R    |    T    |    ?                                ?    |    Z    |    U    |    I    |    O    |    P    |    Ü    |
+// |   TAB   |    A    |    S    |    D    |    F    |    G    |    ?                                ?    |    H    |    J    |    K    |    L    |    Ö    |    Ä    |
+// |  SHIFT  |    Z    |    X    |    C    |    V    |    B    | CTRL+A  | CTRL+C  |  |  CTRL+V |  CTRL+X |    N    |    M    |    ,    |    .    |    /    |  RETURN |
+// |    FN   | CONTROL | OPTION  | COMMAND |                    |   GUI   |   DEL   | RETURN  |  SPACE  | ESCAPE  |  |  RETURN |  SPACE  |   TAB   |   BSPC  |  R ALT  |
+            bindings = <
+    &kp ESC     &kp Q      &kp W      &kp E     &kp R       &kp T      &kp LC(A)           &kp LC(X)     &kp Y      &kp U      &kp I     &kp O      &kp P     &kp BSLH
+    &kp TAB     &kp A      &kp S      &kp D     &kp F       &kp G      &kp LC(C)           &kp LC(V)     &kp H      &kp J      &kp K     &kp L      &kp SEMI  &kp SQT
+    &kp LSHIFT  &kp Z      &kp X      &kp C     &kp V       &kp B      &kp SPACE           &kp SPACE     &kp LC(X)  &kp N      &kp M     &kp COMMA  &kp DOT   &kp FSLH &kp RCTRL
+    &mo FIRST   &kp LCTRL  &kp LGUI   &kp LALT  &mo SECOND  &kp SPACE                                    &kp SPACE  &mo THIRD  &kp LALT  &kp LGUI   &kp LGUI  &mo FOURTH
+            >;
+
+            // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        FIRST {
+
+        };
+
+        SECOND {
+
+        };
+
+        THIRD {
+
+        };
+
+        FOURTH {
+
+        };
+    };
+};
