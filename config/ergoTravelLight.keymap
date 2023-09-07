@@ -1,6 +1,6 @@
 #include <behaviors.dtsi>
+#include "keys_de.h"
 #include <dt-bindings/zmk/keys.h>
-#include "keys_de.h" 
 
 // Layer aliases.
 
@@ -14,7 +14,7 @@
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
+        Default {
             // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
             // |   ESC   |    Q    |    W    |    E    |    R    |    T    |    ?                                ?    |    Z    |    U    |    I    |    O    |    P    |    Ü    |
             // |   TAB   |    A    |    S    |    D    |    F    |    G    |    ?                                ?    |    H    |    J    |    K    |    L    |    Ö    |    Ä    |
@@ -22,13 +22,24 @@
             // |    L0   | CONTROL | OPTION  | COMMAND |                    |   GUI   |   DEL   | RETURN  |  SPACE  | ESCAPE  |  |  RETURN |  SPACE  |   TAB   |   BSPC  |  R ALT  |
 
             bindings = <
-&kp ESC     &kp Q      &kp W     &kp E     &kp R   &kp T      &kp HOME   &kp END    &kp Z      &kp U   &kp I      &kp O     &kp P      &kp DE_U_UMLAUT
-&kp TAB     &kp A      &kp S     &kp D     &kp F   &kp G      &kp DEL    &kp BSPC   &kp H      &kp J   &kp K      &kp L     &kp DE_O_UMLAUT   &kp DE_A_UMLAUT
-&kp LSHIFT  &kp Y      &kp X     &kp C     &kp V   &kp B      &kp LG(C)  &kp LG(V)  &kp N      &kp M   &kp COMMA  &kp DOT   &kp MINUS  &kp RETURN
-&kp N1      &kp LCTRL  &kp LALT  &kp LGUI  &kp N2  &kp SPACE                        &kp SPACE  &kp N3  &kp GUI    &kp RALT  &kp RCTRL  &kp N4
+&kp ESC     &kp Q      &kp W     &kp E     &kp R   &kp T      &kp HOME   &kp END    &kp Z      &kp U  &kp I      &kp O    &kp P            &kp DE_U_UMLAUT
+&kp TAB     &kp A      &kp S     &kp D     &kp F   &kp G      &kp DEL    &kp BSPC   &kp H      &kp J  &kp K      &kp L    &kp DE_O_UMLAUT  &kp DE_A_UMLAUT
+&kp LSHIFT  &kp Y      &kp X     &kp C     &kp V   &kp B      &kp LG(C)  &kp LG(V)  &kp N      &kp M  &kp COMMA  &kp DOT  &kp MINUS        &kp RETURN
+&kp N1      &kp LCTRL  &kp LALT  &kp LGUI  &kp N2  &kp SPACE                        &kp SPACE  &mo 1  &kp LEFT   &kp UP   &kp DOWN_ARROW   &kp RIGHT
             >;
 
             // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        Numbers {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp DE_N7  &kp DE_N8   &kp DE_N9    &kp KP_DIVIDE
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp DE_N4  &kp DE_N5   &kp DE_N6    &kp KP_MULTIPLY
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp DE_N1  &kp DE_N2   &kp DE_N3    &kp KP_SUBTRACT
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &kp DE_N0  &kp DE_DOT  &kp KP_PLUS  &kp RETURN
+            >;
+
+            label = "Numbers";
         };
 
         /*
