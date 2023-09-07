@@ -22,7 +22,7 @@
             // |    L0   | CONTROL | OPTION  | COMMAND |                    |   GUI   |   DEL   | RETURN  |  SPACE  | ESCAPE  |  |  RETURN |  SPACE  |   TAB   |   BSPC  |  R ALT  |
 
             bindings = <
-&kp ESC     &kp Q      &kp W     &kp E     &kp R   &kp T      &kp HOME   &kp END    &kp Z      &kp U   &kp I      &kp O     &kp P      &kp BACKSPACE
+&kp ESC     &kp Q      &kp W     &kp E     &kp R   &kp T      &kp HOME   &kp END    &kp Z      &kp U   &kp I      &kp O     &kp P      &kp DE_U_UMLAUT
 &kp TAB     &kp A      &kp S     &kp D     &kp F   &kp G      &kp DEL    &kp BSPC   &kp H      &kp J   &kp K      &kp L     &kp DE_O_UMLAUT   &kp DE_A_UMLAUT
 &kp LSHIFT  &kp Y      &kp X     &kp C     &kp V   &kp B      &kp LG(C)  &kp LG(V)  &kp N      &kp M   &kp COMMA  &kp DOT   &kp MINUS  &kp RETURN
 &kp N1      &kp LCTRL  &kp LALT  &kp LGUI  &kp N2  &kp SPACE                        &kp SPACE  &kp N3  &kp GUI    &kp RALT  &kp RCTRL  &kp N4
