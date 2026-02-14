@@ -1,0 +1,4 @@
+name: ergotravellight
+build:
+  cmake: .
+  kconfig: Kconfig
