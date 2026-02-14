@@ -1,0 +1,5 @@
+config SHIELD_ERGO_TRAVEL_LIGHT_LEFT
+    def_bool $(shields_list_contains,ergotravellight_left)
+
+config SHIELD_ERGO_TRAVEL_LIGHT_RIGHT
+    def_bool $(shields_list_contains,ergotravellight_right)
