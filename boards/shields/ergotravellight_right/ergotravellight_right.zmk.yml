@@ -1,0 +1,10 @@
+file_format: "1"
+id: ergotravellight_right
+name: Ergo Travel Lite (Right)
+type: shield
+url: https://github.com/jpconstantineau/ErgoTravel
+requires: [pro_micro]
+features:
+  - keys
+siblings:
+  - ergotravellight_left
