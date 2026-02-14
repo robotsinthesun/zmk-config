@@ -1,3 +1,3 @@
-name: ergotravellight
+name: zmk-config
 build:
   cmake: .
