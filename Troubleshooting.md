@@ -1,16 +1,17 @@
-Here is a clean, ready-to-commit Markdown file you can add to your repo (e.g. `MIGRATION_TO_ZMK_v0.3.md`).
+# ZMK Config Notes & Best Practices
+
+This document summarizes important structural requirements, configuration patterns, and common troubleshooting steps when creating and maintaining a custom ZMK configuration repository.
 
 ---
 
-# ErgoTravelLight – Migration to ZMK v0.3
-
-This document summarizes the full migration process from an old ZMK setup (v0.1 era) to modern ZMK v0.3, including structural changes, build fixes, and Bluetooth troubleshooting.
-
----
-
-## 1. Pin ZMK Version
+# 1. Always Pin ZMK Versions
 
 Do **not** build against `main`.
+
+Pin both:
+
+* The ZMK revision in `west.yml`
+* The reusable GitHub workflow version
 
 ### `config/west.yml`
 
@@ -30,50 +31,33 @@ manifest:
 
 ### `.github/workflows/build.yml`
 
-Pin the reusable workflow:
-
 ```yaml
 uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
 ```
 
+Pinning prevents breakage from upstream changes.
+
 ---
 
-## 2. Convert to Modern Module Layout
+# 2. Use Modern Module Layout
 
-Old layout (deprecated):
+ZMK configs must use the Zephyr module layout.
 
-```
-config/boards/...
-```
-
-New required layout:
-
-```
-boards/shields/<shield_name>/
-```
-
-### Final Repository Structure
+## Required Structure
 
 ```
 zmk-config/
 ├── boards/
 │   └── shields/
-│       ├── ergotravellight_left/
-│       │   ├── Kconfig.shield
-│       │   ├── Kconfig.defconfig
-│       │   ├── ergotravellight_left.overlay
-│       │   ├── ergotravellight_left.conf
-│       │   └── ergotravellight_left.zmk.yml
-│       ├── ergotravellight_right/
-│       │   ├── Kconfig.shield
-│       │   ├── Kconfig.defconfig
-│       │   ├── ergotravellight_right.overlay
-│       │   ├── ergotravellight_right.conf
-│       │   └── ergotravellight_right.zmk.yml
-│       └── ergotravellight.dtsi
+│       └── <shield_name>/
+│           ├── Kconfig.shield
+│           ├── Kconfig.defconfig
+│           ├── <shield_name>.overlay
+│           ├── <shield_name>.conf
+│           └── <shield_name>.zmk.yml
 │
 ├── config/
-│   ├── ergotravellight.keymap
+│   ├── <keyboard>.keymap
 │   └── west.yml
 │
 ├── zephyr/
@@ -84,11 +68,13 @@ zmk-config/
 └── build.yaml
 ```
 
+Do **not** place shields under `config/boards/` — that layout is deprecated.
+
 ---
 
-## 3. Required Module Files
+# 3. Required Module Files
 
-### `zephyr/module.yml`
+## `zephyr/module.yml`
 
 ```yaml
 name: zmk-config
@@ -103,160 +89,170 @@ build:
 
 ---
 
-### Root `CMakeLists.txt`
+## Root `CMakeLists.txt`
 
 ```cmake
 cmake_minimum_required(VERSION 3.20.0)
 ```
 
+Even if empty, this file is required when using `cmake: .` in `module.yml`.
+
 ---
 
-### Root `Kconfig`
+## Root `Kconfig`
 
 ```kconfig
-menu "ergotravellight module"
+menu "zmk-config module"
 endmenu
 ```
 
+A module-level `Kconfig` is required when declared in `module.yml`.
+
 ---
 
-## 4. Split Shield Configuration
+# 4. Split Keyboard Configuration
 
 Each half must define only its own shield.
 
-### `ergotravellight_left/Kconfig.shield`
+Example:
+
+## `ergotravellight_left/Kconfig.shield`
 
 ```kconfig
-config SHIELD_ERGO_TRAVEL_LIGHT_LEFT
+config SHIELD_ERGOTRAVELLIGHT_LEFT
     def_bool $(shields_list_contains,ergotravellight_left)
 ```
 
-### `ergotravellight_right/Kconfig.shield`
+## `ergotravellight_right/Kconfig.shield`
 
 ```kconfig
-config SHIELD_ERGO_TRAVEL_LIGHT_RIGHT
+config SHIELD_ERGOTRAVELLIGHT_RIGHT
     def_bool $(shields_list_contains,ergotravellight_right)
 ```
 
----
-
-### Left `Kconfig.defconfig`
+### Central (host-facing half)
 
 ```kconfig
-if SHIELD_ERGO_TRAVEL_LIGHT_LEFT
-
-config ZMK_KEYBOARD_NAME
-    default "ErgoTravel"
-
 config ZMK_SPLIT
     default y
 
 config ZMK_SPLIT_BLE_ROLE_CENTRAL
     default y
-
-endif
 ```
 
-### Right `Kconfig.defconfig`
+### Peripheral half
 
 ```kconfig
-if SHIELD_ERGO_TRAVEL_LIGHT_RIGHT
-
-config ZMK_KEYBOARD_NAME
-    default "ErgoTravel"
-
 config ZMK_SPLIT
     default y
-
-endif
 ```
+
+Only one half should define `ZMK_SPLIT_BLE_ROLE_CENTRAL`.
 
 ---
 
-## 5. Removed Deprecated Config
+# 5. Device Tree Includes
 
-Old:
-
-```conf
-CONFIG_ZMK_BKE=y
-```
-
-This option no longer exists in modern ZMK and must be removed.
-
----
-
-## 6. Bluetooth Device Name Fix
-
-Zephyr asserts:
-
-```
-BUILD_ASSERT(DEVICE_NAME_LEN < CONFIG_BT_DEVICE_NAME_MAX);
-```
-
-If your device name is long, add:
-
-```conf
-CONFIG_BT_DEVICE_NAME="ErgoTravel"
-CONFIG_BT_DEVICE_NAME_MAX=32
-```
-
----
-
-## 7. Devicetree Includes
-
-If using Bluetooth behaviors in keymap:
+When using Bluetooth behaviors in keymaps, include:
 
 ```dts
 #include <dt-bindings/zmk/bt.h>
 ```
 
-Without this include, `BT_SEL`, `BT_CLR`, etc. will fail to parse.
+Other common includes:
+
+```dts
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/behaviors.h>
+```
+
+Without the correct includes, devicetree parsing will fail.
 
 ---
 
-## 8. Bluetooth Pairing Issues
+# 6. Bluetooth Best Practices
 
-### Symptom
+## Add Maintenance Keys
 
-* Device appears in macOS
-* Clicking "Connect" briefly shows “Connecting…”
-* Then reverts to “Connect”
-
-### Cause
-
-Stale Bluetooth bonds stored in keyboard flash.
-
-### Fix
-
-Add to keymap:
+Keep these available in a utility layer:
 
 ```dts
 &bt BT_CLR_ALL
 &bt BT_SEL 0
+&bt BT_SEL 1
+&bt BT_NXT
+&bt BT_PRV
 ```
 
-Then:
+## Clearing Bond Issues
 
-1. Flash firmware
-2. Power central (left) half
-3. Press `BT_CLR_ALL`
-4. Wait 5 seconds
-5. Press `BT_SEL 0`
-6. Pair from macOS
+If pairing loops (“Connecting…” → “Connect”):
 
-This resolved pairing issues completely.
+1. Press `BT_CLR_ALL`
+2. Wait 5 seconds
+3. Press `BT_SEL 0`
+4. Pair again
+
+ZMK stores bonds in flash across firmware updates.
 
 ---
 
-## 9. macOS UF2 Copy Error (-36)
+# 7. Bluetooth Device Name Length
 
-Finder may fail copying UF2 with:
+Zephyr enforces:
 
 ```
-Error code -36
+DEVICE_NAME_LEN < CONFIG_BT_DEVICE_NAME_MAX
 ```
 
-Use Terminal instead:
+If using longer names, explicitly set:
+
+```conf
+CONFIG_BT_DEVICE_NAME="YourKeyboard"
+CONFIG_BT_DEVICE_NAME_MAX=32
+```
+
+Otherwise builds may fail with static assertions.
+
+---
+
+# 8. Deprecated Config Options
+
+Old options may no longer exist.
+
+Example (removed):
+
+```
+CONFIG_ZMK_BKE
+```
+
+Kconfig warnings are treated as fatal errors in modern ZMK.
+
+Always remove undefined symbols.
+
+---
+
+# 9. Shared DTS Files
+
+Common hardware definitions can live in a shared `.dtsi` file:
+
+```
+boards/shields/<common>.dtsi
+```
+
+Include from overlays:
+
+```dts
+#include "../common.dtsi"
+```
+
+File naming is flexible — inclusion is what matters.
+
+---
+
+# 10. macOS UF2 Flashing
+
+If Finder fails copying UF2 files with error `-36`, use Terminal:
 
 ```bash
 cp firmware.uf2 /Volumes/NICENANO/
@@ -266,26 +262,20 @@ If the drive disappears automatically, flashing succeeded.
 
 ---
 
-## 10. Final Working State
+# 11. Debugging Order for Bluetooth Issues
 
-* ZMK v0.3 pinned
-* Modern module layout
-* Shields properly discovered
-* Split central/peripheral correct
-* Bluetooth bonds reset
-* macOS pairing stable
-
----
-
-## Key Lessons
-
-1. Always pin ZMK release versions.
-2. Use module layout (`boards/shields/`).
-3. Add `board_root` to `module.yml`.
-4. Remove deprecated config options.
-5. Bluetooth bond storage survives firmware flashes.
-6. `BT_CLR_ALL` is essential when debugging pairing.
+1. Confirm correct firmware flashed to each half.
+2. Power only the central half and test pairing.
+3. Clear bonds with `BT_CLR_ALL`.
+4. Ensure only central half pairs to host.
+5. Verify split halves connect to each other.
 
 ---
 
-End of document.
+# 12. General Recommendations
+
+* Use lowercase shield names consistently.
+* Match folder name, shield name, and build.yaml entries exactly.
+* Keep Bluetooth utilities in keymap permanently.
+* Pin ZMK releases.
+* Avoid building against `main`.
