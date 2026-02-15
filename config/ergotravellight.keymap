@@ -31,15 +31,14 @@
             // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        NUMBERS {
+        numbers_layer {
+            display-name = "Numbers";
             bindings = <
-&trans  &bt BT_NXT  &bt BT_NXT  &bootloader  &trans  &trans  &trans  &trans  &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DE_N7  &kp DE_N8   &kp DE_N9        &kp KP_DIVIDE
-&trans  &trans      &trans      &trans       &trans  &trans  &trans  &trans  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp DE_N4  &kp DE_N5   &kp DE_N6        &kp KP_MULTIPLY
-&trans  &trans      &trans      &trans       &trans  &trans  &trans  &trans  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp DE_N1  &kp DE_N2   &kp DE_N3        &kp RETURN
-&trans  &trans      &trans      &trans       &trans  &trans                  &trans                &trans                 &kp DE_N0  &kp DE_DOT  &kp KP_SUBTRACT  &kp KP_PLUS
+                &trans  &bt BT_CLR  &bt BT_NXT  &bt BT_CLR_ALL  &bootloader  &trans  &trans  &trans  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp DE_N7  &kp DE_N8  &kp DE_N9  &kp KP_DIVIDE
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp DE_N4  &kp DE_N5  &kp DE_N6  &kp KP_MULTIPLY
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp DE_N1  &kp DE_N2  &kp DE_N3  &kp RETURN
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp DE_N0  &kp DE_DOT  &kp KP_SUBTRACT  &kp KP_PLUS
             >;
-
-            label = "Numbers";
         };
 
         /*
