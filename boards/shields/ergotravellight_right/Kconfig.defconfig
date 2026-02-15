@@ -1,0 +1,9 @@
+if SHIELD_ERGO_TRAVEL_LIGHT_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "Ergo Travel Lite"
+
+config ZMK_SPLIT
+    default y
+
+endif

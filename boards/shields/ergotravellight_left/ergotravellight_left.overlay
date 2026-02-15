@@ -1,7 +1,7 @@
 // ergoTravelLight_left.overlay
 
 // Include dtsi file with the matrix and row GPIO definitons.
-#include "ergoTravelLight.dtsi"
+#include "../ergotravellight.dtsi"
 
 // Column GPIOdefinitions.
 &kscan0 {

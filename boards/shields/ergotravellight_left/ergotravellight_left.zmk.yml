@@ -1,11 +1,10 @@
 file_format: "1"
-id: ergoTravelLight
-name: Ergo Travel Lite
+id: ergotravellight_left
+name: Ergo Travel Lite (Left)
 type: shield
 url: https://github.com/jpconstantineau/ErgoTravel
 requires: [pro_micro]
 features:
   - keys
 siblings:
-  - ergoTravelLight_left
-  - ergoTravelLight_right
+  - ergotravellight_right
